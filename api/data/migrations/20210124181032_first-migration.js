@@ -13,13 +13,15 @@ exports.up = async (knex) => {
         .unsigned()
         .notNullable()
         .references("role_id")
-        .inTable("roles")
+        .inTable("user_role")
         .onUpdate("RESTRICT")
-        .onDelte("RESTRICT");
+        .onDelete("RESTRICT");
       users.timestamps(false, true);
     });
 };
 
 exports.down = async (knex) => {
-  await knex.schema.dropTableIfExists("users");
+  return knex.schema
+  .dropTableIfExists("users")
+  .dropTableIfExists("user_role")
 };
