@@ -9,8 +9,14 @@ async function findAll() {
     .orderBy("c.class_id")
 
     const attendees = await db("classes_students as cs")
+    .select("cs.class_id")
+    .count("cs.student_id", {as: "number_registered"})
+    .groupBy("cs.class_id")
 
-    return classes
+    let finalClasses = classes.map(cl => ({...cl, ...attendees.find(reg => reg.class_id === cl.class_id)}))
+    finalClasses.forEach(cl => cl.number_registered ? cl.number_registered =parseInt(cl.number_registered) : cl.number_registered = 0 )
+    
+    return finalClasses
 }
 // SELECT 
 // c.class_id, c.class_name, c.class_duration, c.max_class_size, c.class_date, c.start_time, c.class_location, u.username as instructor, ci.intensity_level, ct.type_description as class_type
