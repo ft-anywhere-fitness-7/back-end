@@ -40,6 +40,32 @@
 
 </details>
 
+### [POST] /api/login
+
+- Login
+  - _username and password required_
+  - _provides a newly created token_
+
+_What you send:_
+
+```json
+{
+  "username": "SampleUser",
+  "password": "abc123"
+}
+```
+
+_What you receive:_
+
+```json
+{
+  "message": "welcome, SampleUser",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijo1LCJ1c2VybmFtZSI6Ik5ld1VzZXIiLCJpYXQiOjE2MjcyNjY4MDYsImV4cCI6MTYyNzM1MzIwNn0.J1dFd3ghUPYVTodsaAU3Bg2RRcmYM_1oOe-96nvLLUg"
+}
+```
+
+##
+
 ### [GET] /api/users/
 
 **_RESTRICTED ENDPOINT_**
