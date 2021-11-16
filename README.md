@@ -272,7 +272,7 @@ _What you receive:_
 
 - Get an array of classes a specific a specific user is registered for
   - _requires valid token in authorization header to access_
-
+- _(example uses "4" for **:user_id** in URL)_
 _What you receive:_
 
 ```json
