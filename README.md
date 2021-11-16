@@ -39,3 +39,37 @@
 ```
 
 </details>
+
+### [GET] /api/users/
+
+**_RESTRICTED ENDPOINT_**
+
+- Get an array of users
+  - _requires valid token in authorization header to access_
+
+_What you receive:_
+
+```json
+[
+    {
+        "user_id": 1,
+        "username": "tom",
+        "role_type": "instructor"
+    },
+    {
+        "user_id": 2,
+        "username": "jerry",
+        "role_type": "instructor"
+    },
+    {
+        "user_id": 3,
+        "username": "garfield",
+        "role_type": "client"
+    },
+    {
+        "user_id": 4,
+        "username": "odie",
+        "role_type": "client"
+    }
+]
+```
