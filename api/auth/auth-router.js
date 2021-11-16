@@ -4,7 +4,7 @@ const Users = require("./../users/users-model")
 const { validateCredentials, checkUserValid, checkUsernameTaken, validateRole } = require("./auth-middleware")
 const tokenMaker = require("./token-builder")
 const { BCRYPT_ROUNDS } = require("./../config")
-const { createDispatchHook } = require('react-redux')
+
 
 router.post(
     "/register",
