@@ -264,3 +264,42 @@ _What you receive:_
     "type_description": "yoga",
     "number_registered": 2
 }
+
+```
+### [GET] /api/classes/:user_id/attending
+
+**_RESTRICTED ENDPOINT_**
+
+- Get an array of classes a specific a specific user is registered for
+  - _requires valid token in authorization header to access_
+
+_What you receive:_
+
+```json
+[
+    {
+        "class_id": 1,
+        "class_name": "Morning Zen",
+        "class_duration": "1 hour",
+        "max_class_size": 15,
+        "class_date": "2021-11-17T05:00:00.000Z",
+        "start_time": "08:00:00",
+        "class_location": "Central Park",
+        "instructor": "tom",
+        "intensity_level": "beginner",
+        "type_description": "yoga"
+    },
+    {
+        "class_id": 2,
+        "class_name": "Boxing Basics",
+        "class_duration": "45 min",
+        "max_class_size": 12,
+        "class_date": "2021-12-22T05:00:00.000Z",
+        "start_time": "10:30:00",
+        "class_location": "YMCA",
+        "instructor": "jerry",
+        "intensity_level": "beginner",
+        "type_description": "boxing"
+    }
+]
+```

@@ -21,4 +21,13 @@ router.get('/:class_id', async (req, res, next) => {
     }
 })
 
+router.get('/:user_id/attending', async (req, res, next) => {
+    try {
+        const classes = await Classes.findAttending(req.params.user_id)
+        res.status(200).json(classes)
+    } catch(err){
+        next(err)
+    }
+})
+
 module.exports = router
