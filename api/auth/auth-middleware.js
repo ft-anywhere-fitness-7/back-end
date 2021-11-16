@@ -30,4 +30,17 @@ const checkUserValid = async (req, res, next) => {
     }
   };
 
-  module.exports = { validateCredentials, checkUserValid }
+  const checkUsernameTaken = async (req, res, next) => {
+    try {
+      const existing = await Users.findBy({ username: req.body.username });
+      if (existing.length < 1) {
+        next();
+      } else {
+        next({ status: 400, message: "username taken" });
+      }
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  module.exports = { validateCredentials, checkUserValid, checkUsernameTaken }
