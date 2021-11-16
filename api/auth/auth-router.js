@@ -1,14 +1,16 @@
 const router = require('express').Router()
 const bcrypt = require('bcryptjs')
 const Users = require("./../users/users-model")
-const { validateCredentials, checkUserValid, checkUsernameTaken } = require("./auth-middleware")
+const { validateCredentials, checkUserValid, checkUsernameTaken, validateRole } = require("./auth-middleware")
 const tokenMaker = require("./token-builder")
+const { BCRYPT_ROUNDS } = require("./../config")
 
 router.post(
     "/register",
     validateCredentials,
     checkUsernameTaken,
-    async (req, res) => {
+    validateRole,
+    async (req, res, next) => {
       let user = req.body;
   
       const hash = bcrypt.hashSync(user.password, BCRYPT_ROUNDS);
@@ -17,7 +19,7 @@ router.post(
   
       try {
         const newUser = await Users.add(user);
-        res.status(200).json(newUser[0]);
+        res.status(200).json(newUser);
       } catch (err) {
         next(err);
       }
