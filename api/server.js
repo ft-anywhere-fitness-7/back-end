@@ -5,6 +5,7 @@ const Users = require("./users/users-model")
 const classesRouter = require("./classes/classes-router")
 const userRouter = require("./users/users-router")
 const authRouter = require("./auth/auth-router")
+const { restricted } = require('./auth/auth-middleware')
 
 // function getAllUsers() { return db('users') }
 
@@ -29,7 +30,7 @@ server.get('/', (req, res, next) => {
     res.send('api is working')
 })
 
-server.get("/api/users", async (req, res, next) => {
+server.get("/api/users", restricted, async (req, res, next) => {
     try {
       const users = await Users.findAll();
       res.status(200).json(users);

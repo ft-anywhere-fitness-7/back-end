@@ -4,6 +4,7 @@ const Users = require("./../users/users-model")
 const { validateCredentials, checkUserValid, checkUsernameTaken, validateRole } = require("./auth-middleware")
 const tokenMaker = require("./token-builder")
 const { BCRYPT_ROUNDS } = require("./../config")
+const { createDispatchHook } = require('react-redux')
 
 router.post(
     "/register",
@@ -19,7 +20,7 @@ router.post(
   
       try {
         const newUser = await Users.add(user);
-        res.status(200).json(newUser);
+        res.status(200).json({message: 'Account successfully created. Please login.', newUser: {...newUser}});
       } catch (err) {
         next(err);
       }
