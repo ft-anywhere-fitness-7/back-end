@@ -5,6 +5,7 @@ module.exports = function makeToken(user) {
     const payload = {
         subject: user.user_id,
         username: user.username,
+        role: user.role
     }
     const options = {
         expiresIn: '1d'

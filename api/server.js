@@ -1,9 +1,9 @@
 const express = require('express')
 const helmet = require('helmet')
 const cors = require('cors')
-const db = require('./data/db-config')
+const Users = require("./users/users-model")
 const classesRouter = require("./classes/classes-router")
-const usersRouter = require("./users/users-router")
+const userRouter = require("./users/users-router")
 const authRouter = require("./auth/auth-router")
 
 // function getAllUsers() { return db('users') }
@@ -22,12 +22,21 @@ server.use(helmet())
 server.use(cors())
 
 server.use('/api/classes', classesRouter)
-server.use('/api/users', usersRouter)
+server.use('/api/user', userRouter)
 server.use('/api/auth', authRouter)
 
 server.get('/', (req, res, next) => {
     res.send('api is working')
 })
+
+server.get("/api/users", async (req, res, next) => {
+    try {
+      const users = await Users.findAll();
+      res.status(200).json(users);
+    } catch (err) {
+      next(err);
+    }
+  });
 
 
 // server.get('/api/users', async (req, res) => {

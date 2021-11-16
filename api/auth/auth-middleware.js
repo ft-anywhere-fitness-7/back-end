@@ -1,5 +1,6 @@
 const Users = require("./../users/users-model");
 const bcrypt = require("bcryptjs");
+const { TOKEN_SECRET } = require("./../config")
 
 const validateCredentials = (req, res, next) => {
     const { username, password } = req.body;
@@ -43,4 +44,25 @@ const checkUserValid = async (req, res, next) => {
     }
   };
 
-  module.exports = { validateCredentials, checkUserValid, checkUsernameTaken }
+  const restricted = (req, res, next) => {
+    const token = req.headers.authorization;
+  
+    if (!token) {
+      next({ status: 401, message: "Token required" });
+    } else {
+      jwt.verify(token, TOKEN_SECRET, (err, decoded) => {
+        if (err) {
+          delete req.decodedJwt;
+          next({
+            status: 401,
+            message: "Token invalid",
+          });
+        } else {
+          req.decodedJwt = decoded;
+          next();
+        }
+      });
+    }
+  };
+
+  module.exports = { validateCredentials, checkUserValid, checkUsernameTaken, restricted }
