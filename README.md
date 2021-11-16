@@ -1,60 +1,156 @@
-# Build Week Scaffolding for Node and PostgreSQL
+# <p align="center">Anywhere Fitness API</p>
 
-## Video Tutorial
+## <p align="center">https://ft-anywherefitness-7.herokuapp.com/</p>
 
-The following tutorial explains how to set up this project using PostgreSQL and Heroku.
+## <p align="center">---------- REGISTER / LOGIN ----------</p>
 
-[![Setting up PostgreSQL for Build Week](https://img.youtube.com/vi/kTO_tf4L23I/maxresdefault.jpg)](https://www.youtube.com/watch?v=kTO_tf4L23I)
+## Dummy Login Info
 
-## Requirements
+<details>
+<summary>Usernames/Passwords</summary>
 
-- [PostgreSQL, pgAdmin 4](https://www.postgresql.org/download/) and [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) installed in your local machine.
-- A Heroku app with the [Heroku PostgreSQL Addon](https://devcenter.heroku.com/articles/heroku-postgresql#provisioning-heroku-postgres) added to it.
-- Development and testing databases created with [pgAdmin 4](https://www.pgadmin.org/docs/pgadmin4/4.29/database_dialog.html).
+```json
+[
+  {
+    "user_id": 1,
+    "username": "tom",
+    "password": "password",
+    "role_type": "instructor"
+  },
+  {
+    "user_id": 2,
+    "username": "jerry",
+    "password": "password",
+    "role_type": "instructor"
+  },
+  {
+    "user_id": 3,
+    "username": "garfield",
+    "password": "password",
+    "role_type": "client"
+  },
+  {
+    "user_id": 4,
+    "username": "odie",
+    "password": "password",
+    "role_type": "client"
+  }
+]
+```
 
-## Starting a New Project
+</details>
 
-- Create a new repository using this template, and clone it to your local.
-- Create a `.env` file and follow the instructions inside `knexfile.js`.
-- Fix the scripts inside `package.json` to use your Heroku app.
+### [POST] /api/auth/register
 
-## Scripts
+- Register a new user
+  - _username required (must be between 3 and 30 characters)_
+  - _password required (must be between 5 and 200 characters)_
+  - _role required (must be between 'client' or 'instructor', insructor requires auth code)_
 
-- **start**: Runs the app in production.
-- **server**: Runs the app in development.
-- **migrate**: Migrates the local development database to the latest.
-- **rollback**: Rolls back migrations in the local development database.
-- **seed**: Truncates all tables in the local development database, feel free to add more seed files.
-- **test**: Runs tests.
-- **deploy**: Deploys the main branch to Heroku.
+_What you send:_
 
-**The following scripts NEED TO BE EDITED before using: replace `YOUR_HEROKU_APP_NAME`**
+```json client
+{
+  "username": "SampleUser",
+  "password": "abc123",
+  "role_type": "client"
+}
+```
 
-- **migrateh**: Migrates the Heroku database to the latest.
-- **rollbackh**: Rolls back migrations in the Heroku database.
-- **databaseh**: Interact with the Heroku database from the command line using psql.
-- **seedh**: Runs all seeds in the Heroku database.
+```json instructor
+{
+  "username": "SampleUser",
+  "password": "abc123",
+  "role_type": "instructor",
+  "auth_code": "auth_instructor_123"
+}
+```
 
-## Hot Tips
+_What you receive:_
 
-- Figure out the connection to the database and deployment before writing any code.
+```json
+{
+    "message": "Account successfully created. Please login.",
+    "newUser": {
+        "user_id": 15,
+        "username": "SampleUser",
+        "role_type": "instructor"
+    }
+}
+```
 
-- If you need to make changes to a migration file that has already been released to Heroku, follow this sequence:
+### [POST] /api/auth/login
 
-  1. Roll back migrations in the Heroku database
-  2. Deploy the latest code to Heroku
-  3. Migrate the Heroku database to the latest
+- Login
+  - _username and password required_
+  - _provides a newly created token_
 
-- If your frontend devs are clear on the shape of the data they need, you can quickly build provisional endpoints that return mock data. They shouldn't have to wait for you to build the entire backend.
+_What you send:_
 
-- Keep your endpoints super lean: the bulk of the code belongs inside models and other middlewares.
+```json
+{
+  "username": "SampleUser",
+  "password": "abc123"
+}
+```
 
-- Validating and sanitizing client data using a library is much less work than doing it manually.
+_What you receive:_
 
-- Revealing crash messages to clients is a security risk, but during development it's helpful if your frontend devs are able to tell you what crashed.
+```json
+{
+  "message": "welcome, SampleUser",
+  "role": "instructor",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijo1LCJ1c2VybmFtZSI6Ik5ld1VzZXIiLCJpYXQiOjE2MjcyNjY4MDYsImV4cCI6MTYyNzM1MzIwNn0.J1dFd3ghUPYVTodsaAU3Bg2RRcmYM_1oOe-96nvLLUg"
+}
+```
 
-- PostgreSQL comes with [fantastic built-in functions](https://hashrocket.com/blog/posts/faster-json-generation-with-postgresql) for hammering rows into whatever JSON shape.
+##
 
-- If you want to edit a migration that has already been released but don't want to lose all the data, make a new migration instead. This is a more realistic flow for production apps: prod databases are never migrated down. We can migrate Heroku down freely only because there's no valuable data from customers in it. In this sense, Heroku is acting more like a staging environment than production.
+### [GET] /api/users/
 
-- If your fronted devs are interested in running the API locally, help them set up PostgreSQL & pgAdmin in their machines, and teach them how to run migrations in their local. This empowers them to (1) help you troubleshoot bugs, (2) obtain the latest code by simply doing `git pull` and (3) work with their own data, without it being wiped every time you roll back the Heroku db. Collaboration is more fun and direct, and you don't need to deploy as often.
+**_RESTRICTED ENDPOINT_**
+
+- Get an array of users
+  - _requires valid token in authorization header to access_
+
+_What you receive:_
+
+```json
+[
+  {
+    "user_id": 1,
+    "username": "tom",
+    "role_type": "instructor"
+  },
+  {
+    "user_id": 2,
+    "username": "jerry",
+    "role_type": "instructor"
+  },
+  {
+    "user_id": 3,
+    "username": "garfield",
+    "role_type": "client"
+  },
+  {
+    "user_id": 4,
+    "username": "odie",
+    "role_type": "client"
+  }
+]
+```
+### [GET] /api/user/
+
+**_RESTRICTED ENDPOINT_**
+
+- Get information on a specific user
+  - _requires valid token in authorization header to access_
+
+_What you receive:_
+
+```json
+{
+    "user_id": 3,
+    "username": "garfield",
+    "role_type": "client"
+}
