@@ -23,7 +23,7 @@ server.use(cors())
 server.use('/api/classes', classesRouter)
 server.use('/api/users', usersRouter)
 
-server.get('/api', (req, res, next) => {
+server.get('/', (req, res, next) => {
     res.send('api is working')
 })
 

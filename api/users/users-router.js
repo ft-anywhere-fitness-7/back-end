@@ -1,4 +1,14 @@
-const express = require('express')
-const router = express.Router()
+const express = require("express");
+const router = express.Router();
+const Users = require("./users-model");
 
-module.exports = router
+router.get("/", async (req, res, next) => {
+  try {
+    const users = await Users.findAll();
+    res.status(200).json(users);
+  } catch (err) {
+    next(err);
+  }
+});
+
+module.exports = router;
