@@ -154,3 +154,88 @@ _What you receive:_
     "username": "garfield",
     "role_type": "client"
 }
+
+```
+
+##
+
+## <p align="center">---------- CLASSES ----------</p>
+
+### [GET] /api/classes
+
+**_RESTRICTED ENDPOINT_**
+
+- Get an array of all classes you can sing up for
+  - _requires valid token in authorization header to access_
+
+_What you receive:_
+
+```json
+[
+    {
+        "class_id": 1,
+        "class_name": "Morning Zen",
+        "class_duration": "1 hour",
+        "max_class_size": 15,
+        "class_date": "2021-11-17T05:00:00.000Z",
+        "start_time": "08:00:00",
+        "class_location": "Central Park",
+        "instructor": "tom",
+        "intensity_level": "beginner",
+        "type_description": "yoga",
+        "number_registered": 2
+    },
+    {
+        "class_id": 2,
+        "class_name": "Boxing Basics",
+        "class_duration": "45 min",
+        "max_class_size": 12,
+        "class_date": "2021-12-22T05:00:00.000Z",
+        "start_time": "10:30:00",
+        "class_location": "YMCA",
+        "instructor": "jerry",
+        "intensity_level": "beginner",
+        "type_description": "boxing",
+        "number_registered": 1
+    },
+    {
+        "class_id": 3,
+        "class_name": "Sunday Spinning",
+        "class_duration": "1.5 hours",
+        "max_class_size": 25,
+        "class_date": "2021-11-19T05:00:00.000Z",
+        "start_time": "19:00:00",
+        "class_location": "Gym Z",
+        "instructor": "tom",
+        "intensity_level": "advanced",
+        "type_description": "cycling",
+        "number_registered": 2
+    },
+    {
+        "class_id": 4,
+        "class_name": "Water Aerobics",
+        "class_duration": "2 hours",
+        "max_class_size": 10,
+        "class_date": "2022-01-07T05:00:00.000Z",
+        "start_time": "16:45:00",
+        "class_location": "Community Pool",
+        "instructor": "jerry",
+        "intensity_level": "intermediate",
+        "type_description": "swimming",
+        "number_registered": 1
+    },
+    {
+        "class_id": 5,
+        "class_name": "Bikram Yoga",
+        "class_duration": "30 min",
+        "max_class_size": 20,
+        "class_date": "2022-02-08T05:00:00.000Z",
+        "start_time": "18:30:00",
+        "class_location": "Gym X",
+        "instructor": "jerry",
+        "intensity_level": "advanced",
+        "type_description": "yoga",
+        "number_registered": 0
+    }
+]
+```
