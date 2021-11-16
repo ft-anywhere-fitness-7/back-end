@@ -35,4 +35,24 @@ async function findAll() {
 // group by cs.class_id
 // order by cs.class_id
 
-module.exports = { findAll }
+async function findById(id){
+    const theClass = await db("classes as c")
+    .select("c.class_id", "c.class_name", "c.class_duration", "c.max_class_size", "c.class_date", "c.start_time", "c.class_location", "u.username as instructor", "ci.intensity_level", "ct.type_description")
+    .leftJoin("users as u", "c.class_instructor", "u.user_id")
+    .leftJoin("class_intensity as ci", "c.intensity_id", "ci.intensity_id")
+    .leftJoin("class_type as ct", "c.type_id", "ct.type_id")
+    .where('c.class_id', id)
+
+    const attendees = await db("classes_students as cs")
+    .select("cs.class_id")
+    .count("cs.student_id", {as: "number_registered"})
+    .groupBy("cs.class_id")
+    .where('cs.class_id', id)
+
+    let finalClass = theClass.map(cl => ({...cl, ...attendees.find(reg => reg.class_id === cl.class_id)}))
+    finalClass.forEach(cl => cl.number_registered ? cl.number_registered =parseInt(cl.number_registered) : cl.number_registered = 0 )
+    
+    return finalClass[0]
+}
+
+module.exports = { findAll, findById }

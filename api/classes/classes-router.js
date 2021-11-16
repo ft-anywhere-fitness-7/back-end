@@ -12,4 +12,13 @@ router.get('/', async (req, res, next) => {
     }
 })
 
+router.get('/:id', async (req, res, next) => {
+    try {
+        const theClass = await Classes.findById(req.params.id)
+        res.status(200).json(theClass)
+    } catch(err){
+        next(err)
+    }
+})
+
 module.exports = router
