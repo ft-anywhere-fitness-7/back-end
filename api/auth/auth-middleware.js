@@ -1,6 +1,7 @@
 const Users = require("./../users/users-model");
 const bcrypt = require("bcryptjs");
 const { TOKEN_SECRET } = require("./../config")
+const jwt = require("jsonwebtoken")
 
 const validateCredentials = (req, res, next) => {
     const { username, password } = req.body;
