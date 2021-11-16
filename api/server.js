@@ -4,6 +4,7 @@ const cors = require('cors')
 const db = require('./data/db-config')
 const classesRouter = require("./classes/classes-router")
 const usersRouter = require("./users/users-router")
+const authRouter = require("./auth/auth-router")
 
 // function getAllUsers() { return db('users') }
 
@@ -22,6 +23,7 @@ server.use(cors())
 
 server.use('/api/classes', classesRouter)
 server.use('/api/users', usersRouter)
+server.use('/api/auth', authRouter)
 
 server.get('/', (req, res, next) => {
     res.send('api is working')
@@ -43,6 +45,7 @@ server.get('/', (req, res, next) => {
 server.use((err, req, res, next) => { // eslint-disable-line
     res.status(err.status || 500).json({
       message: err.message,
+      prodMessage: 'something went wrong',
       stack: err.stack,
     });
   });

@@ -1,6 +1,17 @@
 const Users = require("./../users/users-model");
 const bcrypt = require("bcryptjs");
 
+const validateCredentials = (req, res, next) => {
+    const { username, password } = req.body;
+    if (!username || !password || !username.trim() || !password.trim) {
+      next({ status: 400, message: "username and password required" });
+    } else {
+      (req.body.username = username.trim()),
+        (req.body.password = password.trim());
+      next();
+    }
+  };
+
 const checkUserValid = async (req, res, next) => {
     const { username, password } = req.body;
     try {
@@ -18,3 +29,5 @@ const checkUserValid = async (req, res, next) => {
       next(err);
     }
   };
+
+  module.exports = { validateCredentials, checkUserValid }

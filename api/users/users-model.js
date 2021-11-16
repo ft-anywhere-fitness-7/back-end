@@ -10,12 +10,12 @@ async function findAll(){
 }
 
 async function findBy(filter){
-    const user = await db("users")
+    const user = await db("users as u")
     .select("u.user_id", "u.username", "u.password", "ur.role_type")
     .leftJoin("user_role as ur", "u.role_id", "ur.role_id")
     .where(filter)
 
-    return user[0]
+    return user
 }
 
 // SELECT u.user_id, u.username, u.password, ur.role_type 
