@@ -113,7 +113,22 @@ async function findTeaching(user_id){
     .leftJoin('class_type as ct', 'c.type_id', 'ct.type_id')
     .where('c.class_instructor', user_id)
 
-    return classes
+    const attendees = await db('classes_students as cs')
+    .select('cs.class_id')
+    .count('cs.student_id', { as: 'number_registered' })
+    .groupBy('cs.class_id');
+
+  let finalClasses = classes.map((cl) => ({
+    ...cl,
+    ...attendees.find((reg) => reg.class_id === cl.class_id),
+  }));
+  finalClasses.forEach((cl) =>
+    cl.number_registered
+      ? (cl.number_registered = parseInt(cl.number_registered))
+      : (cl.number_registered = 0)
+  );
+
+  return finalClasses
 }
 
 
