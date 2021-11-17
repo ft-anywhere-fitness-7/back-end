@@ -136,4 +136,10 @@ async function add(clss) {
   const class_id = await db('classes').insert(clss, 'class_id');
   return findById(Number(class_id));
 }
-module.exports = { findAll, findById, findAttending, add, findTeaching };
+
+async function signup({ user_id, class_id }) {
+    await db('classes_students').insert({ student_id: user_id, class_id})
+    const signup = await findById(class_id)
+    return signup
+}
+module.exports = { findAll, findById, findAttending, add, findTeaching, signup };
