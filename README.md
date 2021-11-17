@@ -347,7 +347,8 @@ _What you receive:_
         "start_time": "10:30:00",
         "class_location": "YMCA",
         "intensity_level": "beginner",
-        "type_description": "boxing"
+        "type_description": "boxing",
+        "number_registered": 1
     },
     {
         "class_id": 4,
@@ -358,7 +359,8 @@ _What you receive:_
         "start_time": "16:45:00",
         "class_location": "Community Pool",
         "intensity_level": "intermediate",
-        "type_description": "swimming"
+        "type_description": "swimming",
+        "number_registered": 1
     },
     {
         "class_id": 5,
@@ -369,7 +371,8 @@ _What you receive:_
         "start_time": "18:30:00",
         "class_location": "Gym X",
         "intensity_level": "advanced",
-        "type_description": "yoga"
+        "type_description": "yoga",
+        "number_registered": 0
     }
 ]
 ```
