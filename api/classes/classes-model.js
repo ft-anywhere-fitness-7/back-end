@@ -97,8 +97,43 @@ async function findAttending(user_id) {
 
   return classes;
 }
+
+async function findTeaching(user_id){
+    const classes = await db("classes as c")
+    .select('c.class_id',
+    'c.class_name',
+    'c.class_duration',
+    'c.max_class_size',
+    'c.class_date',
+    'c.start_time',
+    'c.class_location',
+    'ci.intensity_level',
+    'ct.type_description')
+    .leftJoin('class_intensity as ci', 'c.intensity_id', 'ci.intensity_id')
+    .leftJoin('class_type as ct', 'c.type_id', 'ct.type_id')
+    .where('c.class_instructor', user_id)
+
+    const attendees = await db('classes_students as cs')
+    .select('cs.class_id')
+    .count('cs.student_id', { as: 'number_registered' })
+    .groupBy('cs.class_id');
+
+  let finalClasses = classes.map((cl) => ({
+    ...cl,
+    ...attendees.find((reg) => reg.class_id === cl.class_id),
+  }));
+  finalClasses.forEach((cl) =>
+    cl.number_registered
+      ? (cl.number_registered = parseInt(cl.number_registered))
+      : (cl.number_registered = 0)
+  );
+
+  return finalClasses
+}
+
+
 async function add(clss) {
   const class_id = await db('classes').insert(clss, 'class_id');
   return findById(Number(class_id));
 }
-module.exports = { findAll, findById, findAttending, add };
+module.exports = { findAll, findById, findAttending, add, findTeaching };
