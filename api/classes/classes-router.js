@@ -3,7 +3,7 @@ const router = express.Router();
 const Classes = require('./classes-model');
 const { restricted } = require('./../auth/auth-middleware');
 
-router.get('/', restricted, async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
     const classes = await Classes.findAll();
     res.status(200).json(classes);
