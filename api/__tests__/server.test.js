@@ -103,10 +103,10 @@ describe('Class endpoint testing', () => {
   });
   test('Able to add a class', async () => {
     await request(server).post('/api/auth/register').send(testInstructor);
-    const res = await request(server)
+    await request(server)
       .post('/api/auth/login')
       .send({ username: 'client1', password: 'client1' });
-    const classes = await request(server).post('/api/classes/add').send({
+    await request(server).post('/api/classes/add').send({
       class_name: 'Water Polo',
       class_duration: '1 hour',
       max_class_size: 10,
