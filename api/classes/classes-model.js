@@ -143,6 +143,7 @@ async function signup({ user_id, class_id }) {
   const signup = await findById(class_id);
   return signup;
 }
+
 async function update(class_id, changes) {
   return db('classes')
     .where({ class_id })
@@ -151,6 +152,16 @@ async function update(class_id, changes) {
       return findById(class_id);
     });
 }
+
+async function remove(class_id){
+   const deleted = await db('classes')
+        .where('class_id', class_id)
+        .returning('class_name')
+        .del()
+
+        return deleted
+}
+
 module.exports = {
   findAll,
   findById,
@@ -159,4 +170,5 @@ module.exports = {
   findTeaching,
   signup,
   update,
+  remove
 };

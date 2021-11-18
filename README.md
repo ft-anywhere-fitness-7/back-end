@@ -391,6 +391,7 @@ _What you send:_
   "user_id": 3,
   "class_id": 4
 }
+````
 
 _What you receive:_
 
@@ -409,3 +410,57 @@ _What you receive:_
     "number_registered": 6
 }
 ````
+
+```
+### [PUT] /api/classes/:id
+
+**_RESTRICTED ENDPOINT_**
+- _where :id is class_id (example uses "2" for **:id** in URL)_
+
+- Edits given values of a specific class
+  - _requires valid token in authorization header to access_
+
+  _What you send:_
+
+````json
+{
+  "location": "Gym Z"
+}
+````
+
+_What you receive:_
+
+```json
+{
+    "class_id": 2,
+    "class_name": "Boxing Basics",
+    "class_duration": "45 min",
+    "max_class_size": 12,
+    "class_date": "2021-12-22T05:00:00.000Z",
+    "start_time": "10:30:00",
+    "class_location": "Gym Z",
+    "instructor": "jerry",
+    "intensity_level": "beginner",
+    "type_description": "boxing",
+    "number_registered": 1
+}
+```
+
+### [DELETE] /api/classes/:class_id
+
+**_RESTRICTED ENDPOINT_**
+- _where :class_id is class_id (example uses "2" for **:id** in URL)_
+
+- Deletes specific class
+  - _requires valid token in authorization header to access_
+
+
+_What you receive:_
+
+```json
+{
+    "message": "Boxing Basics has been deleted successfully"
+}
+```
+
+##
