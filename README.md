@@ -409,7 +409,7 @@ _What you receive:_
     "type_description": "swimming",
     "number_registered": 6
 }
-````
+
 
 ```
 ### [PUT] /api/classes/:id
