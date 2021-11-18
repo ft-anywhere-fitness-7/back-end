@@ -446,4 +446,21 @@ _What you receive:_
 }
 ```
 
+### [DELETE] /api/classes/:class_id
+
+**_RESTRICTED ENDPOINT_**
+- _where :class_id is class_id (example uses "2" for **:id** in URL)_
+
+- Deletes specific class
+  - _requires valid token in authorization header to access_
+
+
+_What you receive:_
+
+```json
+{
+    "message": "Boxing Basics has been deleted successfully"
+}
+```
+
 ##

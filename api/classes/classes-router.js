@@ -91,7 +91,7 @@ router.put('/:id', (req, res, next) => {
 router.delete('/:class_id', async (req, res, next ) => {
     try{
        const removed = await Classes.remove(req.params.class_id)
-       res.status(200).json(`${removed} has been deleted successfully`)
+       res.status(200).json({message: `${removed} has been deleted successfully`})
     }
     catch(err) {
         next(err)
