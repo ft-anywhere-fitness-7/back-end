@@ -76,6 +76,7 @@ router.post('/signup', async (req, res, next) => {
     next(err);
   }
 });
+
 router.put('/:id', (req, res, next) => {
   Classes.update(req.params.id, req.body)
     .then(() => {
@@ -86,5 +87,15 @@ router.put('/:id', (req, res, next) => {
     })
     .catch(next);
 });
+
+router.delete('/:class_id', async (req, res, next ) => {
+    try{
+       const removed = await Classes.remove(req.params.class_id)
+       res.status(200).json(`${removed} has been deleted successfully`)
+    }
+    catch(err) {
+        next(err)
+    }
+})
 
 module.exports = router;
